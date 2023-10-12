@@ -109,6 +109,9 @@ class AlienInvasion:
          if pygame.sprite.spritecollideany(self.ship, self.aliens):
               self._ship_hit()
 
+         # Look for aliens hitting the bottom of the screen.
+         self._check_aliens_bottom()
+
     def _create_alien(self, x_position, y_position):
          """Create an alien and place it in the row."""
          new_alien = Alien(self)
@@ -162,6 +165,14 @@ class AlienInvasion:
 
          # Pause.
          sleep(0.5)
+
+    def _check_aliens_bottom(self):
+         """Check if any aliens have rached the bottom of the screen."""
+         for alien in self.aliens.sprites():
+              if alien.rect.bottom >= self.settings.screen_height:
+                   # Treat this the same as if the ship got hit.
+                   self._ship_hit()
+                   break
 
     def _update_screen(self):
          """Update images on the screen and flip to the new screen."""
